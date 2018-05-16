@@ -1,9 +1,6 @@
 #pragma once
-#include <Windows.h>
-#include <iostream>
 #include <string>
 #include <fstream>
-#include <streambuf>
 using namespace std;
 
 class FileEncodingConverter
