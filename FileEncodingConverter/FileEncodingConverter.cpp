@@ -1,8 +1,7 @@
 #include "FileEncodingConverter.h"
 
-FileEncodingConverter::FileEncodingConverter(int buffersize = 512)
+FileEncodingConverter::FileEncodingConverter()
 {
-	iBuffersize = buffersize;
 }
 
 FileEncodingConverter::~FileEncodingConverter()
@@ -16,23 +15,23 @@ void FileEncodingConverter::convert_win1252_to_utf8(string filename)
 
 void FileEncodingConverter::convert_win1252_to_utf8(string filename_input, string filename_output)
 {
-	ifstream t(filename_input);
-	string str;
+	ifstream in(filename_input);
+	string inputString;
 
-	t.seekg(0, ios::end);
-	str.reserve(t.tellg());
-	t.seekg(0, ios::beg);
+	in.seekg(0, ios::end);
+	inputString.reserve(in.tellg());
+	in.seekg(0, ios::beg);
 
-	str.assign((istreambuf_iterator<char>(t)), istreambuf_iterator<char>());
-	auto utf8string = iso_8859_1_to_utf8(str);
-	t.close();
+	inputString.assign((istreambuf_iterator<char>(in)), istreambuf_iterator<char>());
+	auto utf8string = _convert_win1252_to_utf8(inputString);
+	in.close();
 
 	ofstream out(filename_output);
 	out << utf8string;
 	out.close();
 }
 
-string FileEncodingConverter::iso_8859_1_to_utf8(string &str)
+string FileEncodingConverter::_convert_win1252_to_utf8(string &str)
 {
 	string strOut;
 	for (string::iterator it = str.begin(); it != str.end(); ++it)
